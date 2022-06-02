@@ -1,4 +1,20 @@
 <h1><%= title %></h1>
 <p>Welcome to <%= title %></p>
+<div>
+    <h2>Filters</h2>
+    <label>From:
+        <input id="fromDate-input" type="date" />
+    </label>
+    <label>To:
+        <input id="toDate-input" type="date" />
+    </label>
+    <label>Currency:
+        <select id="currency-input">
+            <option value="USD" selected>USD</option>
+            <option value="EUR">EUR</option>
+        </select>
+    </label>
+
+  </div>
 <p>Here's the financial data chart</p>
 <canvas id="my-chart"></canvas>
