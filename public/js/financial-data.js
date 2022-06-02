@@ -16,35 +16,46 @@ function getData(apiUrl){
         .then(responseFromAPI => {
             console.log('The response from API: ', responseFromAPI);
             printTheChart(responseFromAPI.data);
+            findMaxMin(responseFromAPI.data)
         })
         .catch(err => console.log('Error while getting the data: ', err));
 }
 
+function findMaxMin(stockData){
+    const dailyData = stockData.bpi;
+    const stockDates = Object.keys(dailyData);
+    const stockPrices = stockDates.map(date => dailyData[date]);
+    document.getElementById('max').innerHTML = `Max: ${Math.max(...stockPrices)} ${currency}`
+    document.getElementById('min').innerHTML = `Min: ${Math.min(...stockPrices)} ${currency}`
+    
+}
 function printTheChart(stockData) {
-const dailyData = stockData.bpi;
+    const dailyData = stockData.bpi;
 
-const stockDates = Object.keys(dailyData);
-const stockPrices = stockDates.map(date => dailyData[date]);
+    const stockDates = Object.keys(dailyData);
+    const stockPrices = stockDates.map(date => dailyData[date]);
 
-const ctx = document.getElementById('my-chart').getContext('2d');
-const chart = new Chart(ctx, {
-    type: 'line',
-    data: {
-    labels: stockDates,
-    datasets: [
-        {
-        label: 'Bitcoins Price Index',
-        backgroundColor: 'rgba(128, 128, 128, 0.5)',
-        borderColor: 'rgba(128, 128, 128, 0.7)',
-        pointBackgroundColor: 'rgba(128, 128, 128, 0.5)',
-        pointRadius: 4,
-        data: stockPrices
+    const ctx = document.getElementById('my-chart').getContext('2d');
+    const chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+        labels: stockDates,
+        datasets: [
+            {
+            label: 'Bitcoins Price Index',
+            backgroundColor: 'rgba(128, 128, 128, 0.5)',
+            borderColor: 'rgba(128, 128, 128, 0.7)',
+            pointBackgroundColor: 'rgba(128, 128, 128, 0.5)',
+            pointRadius: 4,
+            data: stockPrices
+            }
+        ]
         }
-    ]
-    }
 }); // closes chart = new Chart()
 } // closes printTheChart()
+
 getData(apiUrl)
+
 document.getElementById('fromDate-input').addEventListener('input', () => {
     fromDate = document.getElementById('fromDate-input').value;
     apiUrl = `http://api.coindesk.com/v1/bpi/historical/close.json?start=${fromDate}&end=${toDate}&currency=${currency}`
