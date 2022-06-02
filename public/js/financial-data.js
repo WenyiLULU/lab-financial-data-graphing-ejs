@@ -25,8 +25,8 @@ function findMaxMin(stockData){
     const dailyData = stockData.bpi;
     const stockDates = Object.keys(dailyData);
     const stockPrices = stockDates.map(date => dailyData[date]);
-    document.getElementById('max').innerHTML = `Max: ${Math.max(...stockPrices)} ${currency}`
-    document.getElementById('min').innerHTML = `Min: ${Math.min(...stockPrices)} ${currency}`
+    document.getElementById('max').innerHTML = `Max: ${Math.max(...stockPrices).toFixed(2)} ${currency}`
+    document.getElementById('min').innerHTML = `Min: ${Math.min(...stockPrices).toFixed(2)} ${currency}`
     
 }
 function printTheChart(stockData) {
