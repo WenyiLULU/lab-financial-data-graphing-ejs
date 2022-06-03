@@ -6,3 +6,11 @@ body {
 a {
   color: #00B7FF;
 }
+#infoDisplay{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+#infoDisplay div{
+  width : 50%;
+}

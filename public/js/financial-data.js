@@ -2,13 +2,17 @@ let fromDate = document.getElementById('fromDate-input').value;
 let toDate = document.getElementById('toDate-input').value;
 let currency = document.getElementById('currency-input').value;
 
-let apiUrl = `http://api.coindesk.com/v1/bpi/historical/close.json`
+let apiUrl
 
 
-// function getFromDate(){
-//     let today = new Date();
-//     document.getElementById("fromDate-input").value = today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2);
-// }
+function getFromDate(){
+     let today = new Date();
+    document.getElementById("fromDate-input").value = today.getFullYear() + '-' + ('0' + today.getMonth()).slice(-2) + '-' + ('0' + today.getDate()).slice(-2);
+}
+function getToDate(){
+    let today = new Date();
+   document.getElementById("toDate-input").value = today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2);
+}
 
 function getData(apiUrl){
     axios
@@ -54,7 +58,14 @@ function printTheChart(stockData) {
 }); // closes chart = new Chart()
 } // closes printTheChart()
 
-getData(apiUrl)
+//getData(apiUrl)
+
+window.addEventListener('load', ()=>{
+    getFromDate()
+    getToDate()
+    apiUrl = `http://api.coindesk.com/v1/bpi/historical/close.json?start=${fromDate}&end=${toDate}&currency=${currency}`
+    getData(apiUrl);
+})
 
 document.getElementById('fromDate-input').addEventListener('input', () => {
     fromDate = document.getElementById('fromDate-input').value;
